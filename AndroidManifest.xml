@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+  package="com.radioactiveyak.location_best_practices"
+  android:versionCode="1"
+  android:versionName="1.0"
+  android:name=".PlacesApplication">
+  <uses-sdk android:minSdkVersion="4" android:targetSdkVersion="11" />
+  
+  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+  <uses-permission android:name="android.permission.INTERNET"/>
+  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+  <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"></uses-permission>
+  
+  <application android:icon="@drawable/icon" android:label="@string/app_name" android:backupAgent="PlacesBackupAgent" android:name="PlacesApplication">
+    
+    
+    <activity android:label="@string/app_name" android:launchMode="singleTop" android:name=".UI.PlaceActivity">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER" />
+      </intent-filter>
+    </activity>
+    
+    <service android:enabled="@bool/pre_froyo" android:name=".services.PlacesUpdateService">
+      <intent-filter>
+        <action android:name="com.radioactiveyak.places.placesupdateservice" />
+      </intent-filter>
+    </service>
+    <service android:enabled="@bool/froyo_or_later" android:name=".services.EclairPlacesUpdateService">
+      <intent-filter>
+        <action android:name="com.radioactiveyak.places.placesupdateservice" />
+      </intent-filter>
+    </service>
+    <service android:name=".services.PlaceDetailsUpdateService"/>
+    <service android:name=".services.CheckinNotificationService"/>
+    <service android:name=".services.PlaceCheckinService"/>
+    
+    <receiver android:name=".receivers.LocationChangedReceiver">
+      <intent-filter>
+        <action android:name="com.radioactiveyak.places.active_location_update_action" />
+      </intent-filter>
+    </receiver>
+    <receiver android:name=".receivers.PassiveLocationChangedReceiver">
+      <intent-filter>
+        <action android:name="com.radioactiveyak.places.passive_location_update_action" />
+      </intent-filter>
+    </receiver>
+    <receiver android:name=".receivers.ConnectivityChangedReceiver" enabled="false">
+      <intent-filter>
+        <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+        <action android:name="com.radioactiveyak.places.retry_queued_checkins" />
+      </intent-filter>
+    </receiver>
+    <receiver android:name=".receivers.PowerStateChangedReceiver">
+     <intent-filter>
+       <action android:name="android.intent.action.ACTION_BATTERY_LOW"/>
+		<action android:name="android.intent.action.ACTION_BATTERY_OKAY"/>
+     </intent-filter>
+    </receiver>
+    <receiver android:name=".receivers.NewCheckinReceiver">
+      <intent-filter>
+        <action android:name="com.radioactiveyak.places.NEW_CHECKIN_ACTION"/>
+      </intent-filter>
+    </receiver>
+    <receiver android:name=".receivers.BootReceiver">
+      <intent-filter>
+        <action android:name="android.intent.action.BOOT_COMPLETED"/>
+      </intent-filter>
+    </receiver>
+    
+    <provider android:authorities="com.radioactiveyak.provider.places" android:name=".content_providers.PlacesContentProvider"/>
+    <provider android:authorities="com.radioactiveyak.provider.placedetails" android:name=".content_providers.PlaceDetailsContentProvider"/>
+    <provider android:authorities="com.radioactiveyak.provider.checkins" android:name=".content_providers.QueuedCheckinsContentProvider"/>
+    
+	<meta-data android:name="com.google.android.backup.api_key" android:value="@string/backup_manager_key" />
+  </application>
+</manifest>

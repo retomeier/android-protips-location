@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    <FrameLayout
+      android:id="@+id/main_fragment_container"
+      android:layout_margin="5dp"
+      android:layout_width="fill_parent" 
+      android:layout_height="fill_parent"
+      android:layout_weight="2">
+    	<RelativeLayout
+	      android:layout_margin="5dp"
+	      android:layout_width="fill_parent" 
+	      android:layout_height="fill_parent"
+	      android:layout_weight="3">   
+          <fragment class="com.radioactiveyak.location_best_practices.UI.fragments.CheckinFragment" 
+            android:id="@+id/checkin_fragment"  
+            android:layout_width="fill_parent" 
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true">
+	      </fragment>
+	      <ImageView
+	    	android:id="@+id/powered_by_google" 
+		    android:src="@drawable/powered_by_google_on_white"
+	        android:layout_width="fill_parent" 
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentBottom="true">
+	      </ImageView>
+		  <fragment class="com.radioactiveyak.location_best_practices.UI.fragments.PlaceListFragment"
+		    android:id="@+id/list_fragment"
+		    android:layout_width="fill_parent" 
+	        android:layout_height="fill_parent"
+	        android:layout_below="@id/checkin_fragment"
+	        android:layout_above="@id/powered_by_google"
+		  />
+	    </RelativeLayout>
+    </FrameLayout>
+</LinearLayout>
