@@ -25,7 +25,7 @@ public class PlacesConstants {
    * You can get your API key from: 
    * {@link http://code.google.com/apis/maps/documentation/places/#Limits}
    */
-  private static String MY_API_KEY = ;
+  private static String MY_API_KEY =   ;
   
   public static String PLACES_API_KEY = "&key=" + MY_API_KEY;
   
