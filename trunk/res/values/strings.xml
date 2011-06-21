@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Location Best Practices</string>
+    <string name="refresh">Refresh</string>
+    <string name="checkin_text">Checked in to </string>
+    <string name="checkin_button_text">Checkin</string>
+    <string name="backup_manager_key"></string>
+</resources>
