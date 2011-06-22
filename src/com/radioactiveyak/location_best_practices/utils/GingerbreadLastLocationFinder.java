@@ -76,11 +76,11 @@ public class GingerbreadLastLocationFinder implements ILastLocationFinder {
    * Where the last result is beyond the specified maximum distance or 
    * latency a one-off location update is returned via the {@link LocationListener}
    * specified in {@link setChangedLocationListener}.
-   * @param maxDistance Maximum acceptable distance for a fresh last location.
-   * @param maxTime Maximum acceptable latency for a fresh last location.
+   * @param minDistance Minimum distance before we require a location update.
+   * @param minTime Minimum time required between location updates.
    * @return The most accurate and / or timely previously detected location.
    */
-  public Location getLastBestLocation(int maxDistance, long maxTime) {
+  public Location getLastBestLocation(int minDistance, long minTime) {
     Location bestResult = null;
     float bestAccuracy = Float.MAX_VALUE;
     long bestTime = Long.MIN_VALUE;
@@ -95,12 +95,12 @@ public class GingerbreadLastLocationFinder implements ILastLocationFinder {
         float accuracy = location.getAccuracy();
         long time = location.getTime();
         
-        if ((time > maxTime && accuracy < bestAccuracy)) {
+        if ((time > minTime && accuracy < bestAccuracy)) {
           bestResult = location;
           bestAccuracy = accuracy;
           bestTime = time;
         }
-        else if (time < maxTime && bestAccuracy == Float.MAX_VALUE && time > bestTime) {
+        else if (time < minTime && bestAccuracy == Float.MAX_VALUE && time > bestTime) {
           bestResult = location;
           bestTime = time;
         }
@@ -111,7 +111,7 @@ public class GingerbreadLastLocationFinder implements ILastLocationFinder {
     // best result is wider than the acceptable maximum distance, request a single update.
     // This check simply implements the same conditions we set when requesting regular
     // location updates every [minTime] and [minDistance]. 
-    if (locationListener != null && (bestTime < maxTime || bestAccuracy > maxDistance)) { 
+    if (locationListener != null && (bestTime < minTime || bestAccuracy > minDistance)) { 
       IntentFilter locIntentFilter = new IntentFilter(SINGLE_LOCATION_UPDATE_ACTION);
       context.registerReceiver(singleUpdateReceiver, locIntentFilter);      
       locationManager.requestSingleUpdate(criteria, singleUpatePI);

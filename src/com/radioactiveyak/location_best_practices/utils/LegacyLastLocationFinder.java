@@ -68,11 +68,11 @@ public class LegacyLastLocationFinder implements ILastLocationFinder {
    * Where the last result is beyond the specified maximum distance or 
    * latency a one-off location update is returned via the {@link LocationListener}
    * specified in {@link setChangedLocationListener}.
-   * @param maxDistance Maximum acceptable distance for a fresh last location.
-   * @param maxTime Maximum acceptable latency for a fresh last location.
+   * @param minDistance Minimum distance before we require a location update.
+   * @param minTime Minimum time required between location updates.
    * @return The most accurate and / or timely previously detected location.
    */
-  public Location getLastBestLocation(int maxDistance, long maxTime) {
+  public Location getLastBestLocation(int minDistance, long minTime) {
     Location bestResult = null;
     float bestAccuracy = Float.MAX_VALUE;
     long bestTime = Long.MAX_VALUE;
@@ -87,12 +87,12 @@ public class LegacyLastLocationFinder implements ILastLocationFinder {
         float accuracy = location.getAccuracy();
         long time = location.getTime();
         
-        if ((time < maxTime && accuracy < bestAccuracy)) {
+        if ((time < minTime && accuracy < bestAccuracy)) {
           bestResult = location;
           bestAccuracy = accuracy;
           bestTime = time;
         }
-        else if (time > maxTime && bestAccuracy == Float.MAX_VALUE && time < bestTime) {
+        else if (time > minTime && bestAccuracy == Float.MAX_VALUE && time < bestTime) {
           bestResult = location;
           bestTime = time;
         }
@@ -105,7 +105,7 @@ public class LegacyLastLocationFinder implements ILastLocationFinder {
     // location updates every [minTime] and [minDistance]. 
     // Prior to Gingerbread "one-shot" updates weren't available, so we need to implement
     // this manually.
-    if (locationListener != null && (bestTime > maxTime || bestAccuracy > maxDistance)) { 
+    if (locationListener != null && (bestTime > minTime || bestAccuracy > minDistance)) { 
       String provider = locationManager.getBestProvider(criteria, true);
       if (provider != null)
         locationManager.requestLocationUpdates(provider, 0, 0, singeUpdateListener, context.getMainLooper());
