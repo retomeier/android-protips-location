@@ -45,7 +45,10 @@ import com.radioactiveyak.location_best_practices.R;
 import com.radioactiveyak.location_best_practices.UI.fragments.CheckinFragment;
 import com.radioactiveyak.location_best_practices.UI.fragments.PlaceDetailFragment;
 import com.radioactiveyak.location_best_practices.UI.fragments.PlaceListFragment;
+import com.radioactiveyak.location_best_practices.receivers.LocationChangedReceiver;
 import com.radioactiveyak.location_best_practices.receivers.NewCheckinReceiver;
+import com.radioactiveyak.location_best_practices.receivers.PassiveLocationChangedReceiver;
+import com.radioactiveyak.location_best_practices.services.EclairPlacesUpdateService;
 import com.radioactiveyak.location_best_practices.services.PlacesUpdateService;
 import com.radioactiveyak.location_best_practices.utils.PlatformSpecificImplementationFactory;
 import com.radioactiveyak.location_best_practices.utils.base.ILastLocationFinder;
@@ -131,10 +134,10 @@ public class PlaceActivity extends FragmentActivity {
       criteria.setPowerRequirement(Criteria.POWER_LOW);
     
     // Setup the location update Pending Intents
-    Intent activeIntent = new Intent(PlacesConstants.ACTIVE_LOCATION_UPDATE_ACTION);
+    Intent activeIntent = new Intent(this, LocationChangedReceiver.class);
     locationListenerPendingIntent = PendingIntent.getBroadcast(this, 0, activeIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-    Intent passiveIntent = new Intent(PlacesConstants.PASSIVE_LOCATION_UPDATE_ACTION);
+    Intent passiveIntent = new Intent(this, PassiveLocationChangedReceiver.class);
     locationListenerPassivePendingIntent = PendingIntent.getBroadcast(this, 0, passiveIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
     // Instantiate a LastLocationFinder class.
@@ -276,7 +279,7 @@ public class PlaceActivity extends FragmentActivity {
     locationUpdateRequester.requestPassiveLocationUpdates(PlacesConstants.PASSIVE_MAX_TIME, PlacesConstants.PASSIVE_MAX_DISTANCE, locationListenerPassivePendingIntent);
     
     // Register a receiver that listens for when the provider I'm using has been disabled. 
-    IntentFilter intentFilter = new IntentFilter(PlacesConstants.ACTIVE_LOCATION_UPDATE_ACTION);
+    IntentFilter intentFilter = new IntentFilter(PlacesConstants.ACTIVE_LOCATION_UPDATE_PROVIDER_DISABLED);
     registerReceiver(locProviderDisabledReceiver, intentFilter);
 
     // Register a receiver that listens for when a better provider than I'm using becomes available.
@@ -355,11 +358,11 @@ public class PlaceActivity extends FragmentActivity {
    */
   protected void updatePlaces(Location location, int radius, boolean forceRefresh) {
     if (location != null) {
-      Log.d(TAG, "Updating place list for: " + location.getLatitude() + "," + location.getLongitude());
+      Log.d(TAG, "Updating place list.");
       // Start the PlacesUpdateService. Note that we use an action rather than specifying the 
       // class directly. That's because we have different variations of the Service for different
       // platform versions.
-      Intent updateServiceIntent = new Intent(PlacesConstants.PLACES_UPDATE_SERVICE_ACTION);
+      Intent updateServiceIntent = new Intent(this, PlacesConstants.SUPPORTS_ECLAIR ? EclairPlacesUpdateService.class : PlacesUpdateService.class);
       updateServiceIntent.putExtra(PlacesConstants.EXTRA_KEY_LOCATION, location);
       updateServiceIntent.putExtra(PlacesConstants.EXTRA_KEY_RADIUS, radius);
       updateServiceIntent.putExtra(PlacesConstants.EXTRA_KEY_FORCEREFRESH, forceRefresh);

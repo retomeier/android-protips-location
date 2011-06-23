@@ -109,13 +109,12 @@ public class PlacesConstants {
   
   public static String NEW_CHECKIN_ACTION = "com.radioactiveyak.places.NEW_CHECKIN_ACTION";
   public static String RETRY_QUEUED_CHECKINS_ACTION = "com.radioactiveyak.places.retry_queued_checkins";
-  public static String PASSIVE_LOCATION_UPDATE_ACTION = "com.radioactiveyak.places.passive_location_update_action";
-  public static String ACTIVE_LOCATION_UPDATE_ACTION = "com.radioactiveyak.places.active_location_update_action";
-  public static String PLACES_UPDATE_SERVICE_ACTION = "com.radioactiveyak.places.placesupdateservice";
+  public static String ACTIVE_LOCATION_UPDATE_PROVIDER_DISABLED = "com.radioactiveyak.places.active_location_update_provider_disabled";
   
   public static boolean SUPPORTS_GINGERBREAD = android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.GINGERBREAD;
   public static boolean SUPPORTS_HONEYCOMB = android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB;
   public static boolean SUPPORTS_FROYO = android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.FROYO;
+  public static boolean SUPPORTS_ECLAIR = android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.ECLAIR;
   
   public static String CONSTRUCTED_LOCATION_PROVIDER = "CONSTRUCTED_LOCATION_PROVIDER";
   
