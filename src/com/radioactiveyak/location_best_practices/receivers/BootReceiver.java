@@ -51,8 +51,8 @@ public class BootReceiver extends BroadcastReceiver {
       
       if (followLocationChanges) { 	  
         // Passive location updates from 3rd party apps when the Activity isn't visible.
-        Intent passiveIntent = new Intent(PlacesConstants.PASSIVE_LOCATION_UPDATE_ACTION);
-        PendingIntent locationListenerPassivePendingIntent = PendingIntent.getBroadcast(context, 0, passiveIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        Intent passiveIntent = new Intent(context, PassiveLocationChangedReceiver.class);
+        PendingIntent locationListenerPassivePendingIntent = PendingIntent.getActivity(context, 0, passiveIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         locationUpdateRequester.requestPassiveLocationUpdates(PlacesConstants.PASSIVE_MAX_TIME, PlacesConstants.PASSIVE_MAX_DISTANCE, locationListenerPassivePendingIntent);
       }
   	}

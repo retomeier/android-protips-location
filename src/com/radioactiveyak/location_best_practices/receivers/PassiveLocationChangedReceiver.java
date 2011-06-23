@@ -17,6 +17,8 @@
 package com.radioactiveyak.location_best_practices.receivers;
 
 import com.radioactiveyak.location_best_practices.PlacesConstants;
+import com.radioactiveyak.location_best_practices.services.EclairPlacesUpdateService;
+import com.radioactiveyak.location_best_practices.services.PlacesUpdateService;
 import com.radioactiveyak.location_best_practices.utils.LegacyLastLocationFinder;
 
 import android.content.BroadcastReceiver;
@@ -82,7 +84,7 @@ public class PassiveLocationChangedReceiver extends BroadcastReceiver {
     // Start the Service used to find nearby points of interest based on the last detected location.
     if (location != null) {
       Log.d(TAG, "Passivly updating place list.");
-      Intent updateServiceIntent = new Intent(PlacesConstants.PLACES_UPDATE_SERVICE_ACTION);
+      Intent updateServiceIntent = new Intent(context, PlacesConstants.SUPPORTS_ECLAIR ? EclairPlacesUpdateService.class : PlacesUpdateService.class);
       updateServiceIntent.putExtra(PlacesConstants.EXTRA_KEY_LOCATION, location);
       updateServiceIntent.putExtra(PlacesConstants.EXTRA_KEY_RADIUS, PlacesConstants.DEFAULT_RADIUS);
       updateServiceIntent.putExtra(PlacesConstants.EXTRA_KEY_FORCEREFRESH, false);

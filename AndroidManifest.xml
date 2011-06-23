@@ -35,16 +35,8 @@
     <service android:name=".services.CheckinNotificationService"/>
     <service android:name=".services.PlaceCheckinService"/>
     
-    <receiver android:name=".receivers.LocationChangedReceiver">
-      <intent-filter>
-        <action android:name="com.radioactiveyak.places.active_location_update_action" />
-      </intent-filter>
-    </receiver>
-    <receiver android:name=".receivers.PassiveLocationChangedReceiver">
-      <intent-filter>
-        <action android:name="com.radioactiveyak.places.passive_location_update_action" />
-      </intent-filter>
-    </receiver>
+    <receiver android:name=".receivers.LocationChangedReceiver"/>
+    <receiver android:name=".receivers.PassiveLocationChangedReceiver"/>
     <receiver android:name=".receivers.ConnectivityChangedReceiver" enabled="false">
       <intent-filter>
         <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
