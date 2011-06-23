@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <bool name="froyo_or_later">true</bool>
-    <bool name="pre_froyo">false</bool>
+  <bool name="froyo_or_later">true</bool>
+  <bool name="pre_froyo">false</bool>
 </resources>
