@@ -14,6 +14,8 @@
  * limitations under the License.
  */
  
+This project is using outdated Android APIs and is in the process of being updated.
+ 
 ** QUICK START GUIDE **
 
 1) Make sure you've downloaded and installed the Android Compatibility Library:
