@@ -28,7 +28,7 @@
 ** About this Project **
  
 Project Home Page:
-http://code.google.com/p/android-protips-location/
+https://github.com/retomeier/android-protips-location/
 
 Maintained by:
 Reto Meier
