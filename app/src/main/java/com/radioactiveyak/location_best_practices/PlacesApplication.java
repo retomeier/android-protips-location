@@ -23,7 +23,7 @@ import com.radioactiveyak.location_best_practices.utils.base.IStrictMode;
 
 public class PlacesApplication extends Application {
   
-  // TODO Insert your Google Places API into MY_API_KEY in PlacesConstants.java
+  // TODO Please Insert your Google Places API into MY_API_KEY in PlacesConstants.java
   // TODO Insert your Backup Manager API into res/values/strings.xml : backup_manager_key
   
   @Override
